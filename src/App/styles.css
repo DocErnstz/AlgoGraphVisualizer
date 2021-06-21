@@ -1,0 +1,28 @@
+
+:root {
+    --size_square: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+body{
+    margin: 30px;
+    padding: 0px;
+    height: 665px;
+}
+
+.row{
+    display: flex;
+    border: 1px solid black;
+    width: calc(var(--size_square) * 18);
+    height: var(--size_square);
+}
+.col{
+ width: var(--size_square);
+ height: var(--size_square);
+ border: 1px solid black;
+}
+
+.red{
+    background: red;
+}
