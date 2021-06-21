@@ -9,3 +9,11 @@ function select(x,y){
 
 
 
+class Cell {
+    constructor(x, y) {
+      this.x = y;
+      this.y = y;
+    }
+    
+  }
+
