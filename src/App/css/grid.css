@@ -1,0 +1,45 @@
+.row{
+    display: flex;
+    border: 1px solid black;
+    width: calc(var(--size_square) * 18);
+    height: var(--size_square);
+}
+.col{
+ width: var(--size_square);
+ height: var(--size_square);
+ border: 1px solid black;
+ display: inline-block;
+
+}
+#start{
+    background-image: url();
+    width: 100%;
+    height: 100%;
+}
+.red{
+    background: red;
+    animation: invoke 2s ease-in-out;
+}
+
+
+.blue{
+    background: darkblue;
+}
+
+
+
+.col i{
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes invoke {
+    0% {
+        width: 0%;
+        height: 0%;
+    }
+    100% {
+        width: 100%;
+        height: 100%;
+    }
+}
