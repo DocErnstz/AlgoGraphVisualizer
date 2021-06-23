@@ -1,7 +1,9 @@
 require("./css/index.css");
 import {pathfinding, Clear} from "./SearchPath.js";
+import "regenerator-runtime/runtime";
 
 const {Cell} = require("./DataStructure.js"); 
+var elements=document.getElementById('matrix').children;
 const start = document.getElementById("start");
 const cells = document.querySelectorAll(".col");
 var start_point = new Cell(0,0);
@@ -48,13 +50,35 @@ for(const cell of cells){
     start_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
   }
 
-  function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+ 
+  function select(x,y){
+    const red = document.createElement("div");
+    red.classList.add("red");
+    elements.item(y).children.item(x).append(red);
 }
 
-  async function loop()
+
+
+var ce = new Cell(4,4);
+
+function paint(a)
+{ 
+  var x = 0;
+  var y = 0;
+  var counter = 0;
+  var id = setInterval(se, 500);
+  function se()
   {
-      await timeout(3000);
-      console.log("b");
+    if(counter > 3){
+      clearInterval(id);
+    }
+    x = ce.neighbors()[counter].x;
+    y = ce.neighbors()[counter].y;
+    counter++;
+    select(x,y);
   }
-  loop();
+}
+
+
+
+paint();

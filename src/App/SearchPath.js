@@ -23,6 +23,8 @@ export function Clear()
     }
 }
 
+
+
 function UCS(start, goal){
     var frontier = new PriorityQueue();
     frontier.enqueue(start, 0);
@@ -39,7 +41,7 @@ function UCS(start, goal){
         }
        
         
-        current.element.neighbors().forEach(next => {
+        current.element.neighbors().forEach(async (next) => {
             var new_cost = 1 + cost_so_far[current.element.id]
             if (!(next.id in cost_so_far) || (new_cost < cost_so_far[next.id]))
             {
