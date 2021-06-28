@@ -30,8 +30,8 @@
 
 .blue{
     background: darkblue;
+    animation: invoke 0.5s ease-in-out;
 }
-
 
 
 .col i{

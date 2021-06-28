@@ -2,7 +2,7 @@ const {PriorityQueue} = require("./DataStructure.js");
 const {Cell} = require("./DataStructure.js");
 var elements=document.getElementById('matrix').children;
 
-function select(x,y){
+export function select(x,y){
     const red = document.createElement("div");
     red.classList.add("red");
     elements.item(y).children.item(x).append(red);
@@ -64,14 +64,16 @@ export function UCS(start, goal){
 
 
 
-export function pathfinding(start, goal)
+export function pathfinding(start, goal, UCS)
 {
-    var current = goal.id;
     var path = []
-    var dict = UCS(start, goal);
+    var dict = UCS;
+    var current = dict[goal.id].id
     while(current != start.id)
     {
-        path.push(current);
+        
+        path.push(current);   
+             
         current = dict[current].id;
     }
     return path

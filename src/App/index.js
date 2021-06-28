@@ -16,9 +16,32 @@ const cells = document.querySelectorAll(".col");
 var start_point = new Cell(0,0);
 var end_point = new Cell(2,2);
 var selected_id = "start";
+function path_mark(x,y)
+{
+  const blue = document.createElement("div");
+  blue.classList.add("blue");
+  elements.item(y).children.item(x).append(blue);
+}
 
-document.getElementById("Visualizer").addEventListener("click", (e) => {
-    UCS(start_point, end_point);
+document.getElementById("Visualizer").addEventListener("click", async (e) => {
+    //console.log(pathfinding(start_point, end_point));
+    let promise = new Promise(function(resolve, reject) {
+      setTimeout(()=>{
+        resolve(UCS(start_point, end_point));
+      },1000)
+    });
+    var UCS_dict = await promise;
+    let promise2 = new Promise(function(resolve, reject) {
+      setTimeout(()=>{
+        resolve(pathfinding(start_point, end_point, UCS_dict));
+      },2000)
+    });
+    var path = await promise2;
+    console.log(path);
+    path.forEach((pos) => (
+      path_mark(pos.charAt(0), pos.charAt(1))
+    ));
+    //pathfinding(start_point, end_point, UCS_dict).forEach((pos) => path_mark(pos.charAt(0), pos.charAt(1)));
 });
 document.getElementById("Clear").addEventListener("click", (e) => {
     Clear();
