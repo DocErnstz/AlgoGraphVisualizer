@@ -21,9 +21,18 @@ body{
 
 }
 
-#start{
-    background-color: red;
+#start, #end
+{
     border-radius: 30px;
+}
+
+#start
+{
+    background-color: red;
+}
+#end
+{
+    background-color: blue;
 }
 
 body {

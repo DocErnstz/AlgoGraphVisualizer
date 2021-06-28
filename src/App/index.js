@@ -1,22 +1,32 @@
 require("./css/index.css");
-import {pathfinding, Clear} from "./SearchPath.js";
+
+
 import "regenerator-runtime/runtime";
+
+
+import {pathfinding, Clear, UCS} from "./SearchPath.js";
+const {PriorityQueue} = require("./DataStructure.js");
+
 
 const {Cell} = require("./DataStructure.js"); 
 var elements=document.getElementById('matrix').children;
 const start = document.getElementById("start");
+const end = document.getElementById("end");
 const cells = document.querySelectorAll(".col");
 var start_point = new Cell(0,0);
+var end_point = new Cell(2,2);
+var selected_id = "start";
 
 document.getElementById("Visualizer").addEventListener("click", (e) => {
-    pathfinding(start_point, new Cell(2,2));
+    UCS(start_point, end_point);
 });
 document.getElementById("Clear").addEventListener("click", (e) => {
     Clear();
 });
 
-//start.addEventListener('dragstart', dragStart);
-start.addEventListener('dragend', dragEnd);
+start.addEventListener('dragstart', dragStart);
+end.addEventListener('dragstart', dragStart);
+
 
 for(const cell of cells){
     cell.addEventListener("dragover", dragOver);
@@ -28,8 +38,19 @@ for(const cell of cells){
 
 
   
-  function dragEnd() {
-    this.className = 'start';
+  async function dragStart() {
+    let promise = new Promise(function(resolve, reject) {
+      setTimeout(()=>{
+        resolve("production has started")
+      },200)
+    });
+    let promise2 = new Promise(function(resolve, reject) {
+      setTimeout(()=>{
+        resolve("production has finished")
+      },300)
+    });
+    await promise2.then((b) => selected_id = this.id);
+  
   }
   
   function dragOver(e) {
@@ -44,10 +65,31 @@ for(const cell of cells){
     this.className = 'col';
   }
   
-  function dragDrop() {
-    this.className = "col";
-    this.append(start);
-    start_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
+  async function dragDrop() {
+    let promise = new Promise(function(resolve, reject) {
+      setTimeout(()=>{
+        resolve()
+      },200)
+    });
+    let promise2 = new Promise(function(resolve, reject) {
+      setTimeout(()=>{
+        resolve()
+      },300)
+    });
+    if(selected_id == "end")
+    {
+      await promise2.then(() => this.append(end))
+      end_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
+    }
+    else
+    {
+      await promise2.then(() => this.append(start))
+      start_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
+
+    }
+    
+
+    //start_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
   }
 
  
@@ -56,29 +98,3 @@ for(const cell of cells){
     red.classList.add("red");
     elements.item(y).children.item(x).append(red);
 }
-
-
-
-var ce = new Cell(4,4);
-
-function paint(a)
-{ 
-  var x = 0;
-  var y = 0;
-  var counter = 0;
-  var id = setInterval(se, 500);
-  function se()
-  {
-    if(counter > 3){
-      clearInterval(id);
-    }
-    x = ce.neighbors()[counter].x;
-    y = ce.neighbors()[counter].y;
-    counter++;
-    select(x,y);
-  }
-}
-
-
-
-paint();

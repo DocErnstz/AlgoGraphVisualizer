@@ -25,7 +25,7 @@ export function Clear()
 
 
 
-function UCS(start, goal){
+export function UCS(start, goal){
     var frontier = new PriorityQueue();
     frontier.enqueue(start, 0);
     var cost_so_far = {};
@@ -39,10 +39,8 @@ function UCS(start, goal){
         if(current.element.id == goal.id){
             break;
         }
-       
-        
-        current.element.neighbors().forEach(async (next) => {
-            var new_cost = 1 + cost_so_far[current.element.id]
+        current.element.neighbors().forEach((next) => {
+            var new_cost = 1 + cost_so_far[current.element.id] 
             if (!(next.id in cost_so_far) || (new_cost < cost_so_far[next.id]))
             {
                 cost_so_far[next.id] = new_cost;
@@ -50,11 +48,15 @@ function UCS(start, goal){
                 came_from[next.id] = current.element;
                 select(next.x,next.y);
             }
+            
         });
        
+        
     }
     return came_from;   
 }
+
+
 
 
 export function pathfinding(start, goal)
@@ -69,3 +71,4 @@ export function pathfinding(start, goal)
     }
     return path
 }
+
