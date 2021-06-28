@@ -15,7 +15,8 @@ export function Clear()
         for(var y = 0; y < 17; y++)
         {
             //elements.item(y).children.item(x).removeChild(elements.item(x).children.item(y).firstChild);   
-            console.log(elements.item(y).children.item(x).firstChild.getElementById("red"));
+            //console.log(elements.item(y).children.item(x).firstChild.getElementById("red"));
+
             while (elements.item(y).children.item(x).lastElementChild) {
                 elements.item(y).children.item(x).removeChild(elements.item(y).children.item(x).lastElementChild);
               }
@@ -46,7 +47,11 @@ export function UCS(start, goal){
                 cost_so_far[next.id] = new_cost;
                 frontier.enqueue(next, new_cost);
                 came_from[next.id] = current.element;
-                select(next.x,next.y);
+                if(next.id != goal.id)
+                {
+                    select(next.x,next.y);
+                }
+               
             }
             
         });
