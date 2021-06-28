@@ -34,6 +34,11 @@
 }
 
 
+.block
+{
+    background-color: black;
+}
+
 .col i{
     width: 100%;
     height: 100%;

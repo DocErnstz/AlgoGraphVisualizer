@@ -73,11 +73,11 @@ class Cell {
         var maxY =  2;
         if (this.x-1 < 0)
           minX = 0;
-        if (this.x+1 > 15)
+        if (this.x+1 > 17)
           maxX = 1;
         if (this.y-1 < 0)
           minY = 0;
-        if (this.y+1 > 15)
+        if (this.y+1 > 17)
           maxY = 1;
         for (var x = minX; x < maxX; x++) {
           for (var y = minY; y < maxY; y++) {
