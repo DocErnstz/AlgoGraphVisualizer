@@ -4,7 +4,7 @@ require("./css/index.css");
 import "regenerator-runtime/runtime";
 
 
-import {pathfinding, Clear, UCS, cost_so_far} from "./SearchPath.js";
+import {pathfinding, Clear, ClearBlocks, UCS, cost_so_far} from "./SearchPath.js";
 const {PriorityQueue} = require("./DataStructure.js");
 const {Cell} = require("./DataStructure.js"); 
 var elements=document.getElementById('matrix').children;
@@ -14,7 +14,7 @@ const cells = document.querySelectorAll(".col");
 var start_point = new Cell(0,0);
 var end_point = new Cell(2,2);
 var selected_id = "start";
-
+export var blocks = {}
 function path_mark(x,y)
 {
   const blue = document.createElement("div");
@@ -24,6 +24,7 @@ function path_mark(x,y)
 
 document.getElementById("Visualizer").addEventListener("click", async (e) => {
     //console.log(pathfinding(start_point, end_point));
+    console.log("a");
     
     let promise = new Promise((resolve, reject) => {
       setTimeout(function(){
@@ -35,16 +36,20 @@ document.getElementById("Visualizer").addEventListener("click", async (e) => {
     let promise2 = new Promise((resolve, reject) => {
       setTimeout(function(){
         resolve(pathfinding(start_point, end_point, UCS_dict))
+      }, 1500)
+    })
+    let promise3 = new Promise((resolve, reject) => {
+      setTimeout(function(){
+        resolve(Clear())
       }, 2000)
     })
     const path = await promise2;
     path.forEach((p) => path_mark(p.x, p.y))
-
-    
+    const clear = await promise3;
     //pathfinding(start_point, end_point, UCS_dict).forEach((pos) => path_mark(pos.charAt(0), pos.charAt(1)));
 });
 document.getElementById("Clear").addEventListener("click", (e) => {
-    Clear();
+    ClearBlocks();
 });
 
 start.addEventListener('dragstart', dragStart);
@@ -65,6 +70,7 @@ for(const cell of cells){
 
    this.classList.add("block");
    var block_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
+   blocks[block_point.id] = null
    cost_so_far[block_point.id] = null
    console.log(block_point.id);
 }
@@ -124,7 +130,6 @@ for(const cell of cells){
 
     //start_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
   }
-
  
   function select(x,y){
     const red = document.createElement("div");

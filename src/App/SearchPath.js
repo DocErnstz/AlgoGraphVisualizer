@@ -1,5 +1,6 @@
 const {PriorityQueue} = require("./DataStructure.js");
 const {Cell} = require("./DataStructure.js");
+import {blocks} from "./index.js";
 var elements=document.getElementById('matrix').children;
 export var cost_so_far = {};
 
@@ -9,20 +10,55 @@ export function select(x,y){
     elements.item(y).children.item(x).append(red);
 }
 
+
+
+
 export function Clear()
 {
-    for(var x = 0; x < 17; x++)
+    cost_so_far = {};
+    cost_so_far = Object.assign({}, blocks);
+    console.log(cost_so_far);
+    
+    for(var x = 0; x < 18; x++)
     {
-        for(var y = 0; y < 17; y++)
+        for(var y = 0; y < 18; y++)
         {
             //elements.item(y).children.item(x).removeChild(elements.item(x).children.item(y).firstChild);   
             //console.log(elements.item(y).children.item(x).firstChild.getElementById("red"));
-
-            while (elements.item(y).children.item(x).lastElementChild) {
-                elements.item(y).children.item(x).removeChild(elements.item(y).children.item(x).lastElementChild);
-              }
+            if(elements.item(y).children.item(x).lastElementChild != null)
+            {
+                if(elements.item(y).children.item(x).lastElementChild.classList.contains("red"))
+                {
+                    elements.item(y).children.item(x).innerHTML = ""
+                }
+            }            
+            //console.log(elements.item(y).children.item(x).lastElementChild.classList.contains("red"))
+            
+            
         }
     }
+}
+
+export function ClearBlocks()
+{
+    cost_so_far = {}
+    for(var x = 0; x < 18; x++)
+    {
+        for(var y = 0; y < 18; y++)
+        {
+            //elements.item(y).children.item(x).removeChild(elements.item(x).children.item(y).firstChild);   
+            //console.log(elements.item(y).children.item(x).firstChild.getElementById("red"));
+            if(elements.item(y).children.item(x).className == "col block" ? true : false)
+            {
+                elements.item(y).children.item(x).className = "col" 
+            }; 
+            //console.log(elements.item(y).children.item(x).lastElementChild.classList.contains("red"))
+            
+            
+        }
+    }    
+    
+    
 }
 
 
