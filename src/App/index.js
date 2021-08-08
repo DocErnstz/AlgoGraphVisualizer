@@ -1,5 +1,3 @@
-require("./css/index.css");
-
 import "regenerator-runtime/runtime";
 
 import {
@@ -11,7 +9,7 @@ import {
 } from "./SearchPath.js";
 const { PriorityQueue } = require("./DataStructure.js");
 const { Cell } = require("./DataStructure.js");
-var elements = document.getElementById("matrix").children;
+
 const start = document.getElementById("start");
 const end = document.getElementById("end");
 const cells = document.querySelectorAll(".col");
@@ -19,7 +17,8 @@ var start_point = new Cell(0, 0);
 var end_point = new Cell(2, 2);
 var selected_id = "start";
 export var blocks = {};
-function path_mark(x, y) {
+export function path_mark(x, y) {
+  var elements = document.getElementById("matrix").children;
   const blue = document.createElement("div");
   blue.classList.add("blue");
   elements.item(y).children.item(x).append(blue);
@@ -132,8 +131,14 @@ async function dragDrop() {
   //start_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
 }
 
+function sum() {
+  return 4;
+}
 function select(x, y) {
+  var elements = document.getElementById("matrix").children;
   const red = document.createElement("div");
   red.classList.add("red");
   elements.item(y).children.item(x).append(red);
 }
+
+module.exports = { sum: sum };

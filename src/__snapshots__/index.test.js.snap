@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index.html block works out 1`] = `
+Object {
+  "id": "30",
+  "x": 3,
+  "y": 0,
+}
+`;
