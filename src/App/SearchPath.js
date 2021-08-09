@@ -15,12 +15,9 @@ export function Clear() {
   var elements = document.getElementById("matrix").children;
   cost_so_far = {};
   cost_so_far = Object.assign({}, blocks);
-  console.log(cost_so_far);
 
   for (var x = 0; x < 18; x++) {
     for (var y = 0; y < 18; y++) {
-      //elements.item(y).children.item(x).removeChild(elements.item(x).children.item(y).firstChild);
-      //console.log(elements.item(y).children.item(x).firstChild.getElementById("red"));
       if (elements.item(y).children.item(x).lastElementChild != null) {
         if (
           elements
@@ -31,7 +28,6 @@ export function Clear() {
           elements.item(y).children.item(x).innerHTML = "";
         }
       }
-      //console.log(elements.item(y).children.item(x).lastElementChild.classList.contains("red"))
     }
   }
 }
@@ -41,8 +37,6 @@ export function ClearBlocks() {
   cost_so_far = {};
   for (var x = 0; x < 18; x++) {
     for (var y = 0; y < 18; y++) {
-      //elements.item(y).children.item(x).removeChild(elements.item(x).children.item(y).firstChild);
-      //console.log(elements.item(y).children.item(x).firstChild.getElementById("red"));
       if (
         elements.item(y).children.item(x).className == "col block"
           ? true
@@ -50,7 +44,6 @@ export function ClearBlocks() {
       ) {
         elements.item(y).children.item(x).className = "col";
       }
-      //console.log(elements.item(y).children.item(x).lastElementChild.classList.contains("red"))
     }
   }
 }

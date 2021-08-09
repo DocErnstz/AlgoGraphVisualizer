@@ -28,7 +28,7 @@ document.getElementById("Visualizer").addEventListener("click", async () => {
   listenVisual();
 });
 
-function listenVisual() {
+async function listenVisual() {
   let promise = new Promise((resolve, reject) => {
     setTimeout(function () {
       resolve(UCS(start_point, end_point));
