@@ -24,7 +24,11 @@ function path_mark(x, y) {
   elements.item(y).children.item(x).append(blue);
 }
 
-document.getElementById("Visualizer").addEventListener("click", async (e) => {
+document.getElementById("Visualizer").addEventListener("click", async () => {
+  listenVisual();
+});
+
+function listenVisual() {
   let promise = new Promise((resolve, reject) => {
     setTimeout(function () {
       resolve(UCS(start_point, end_point));
@@ -45,7 +49,8 @@ document.getElementById("Visualizer").addEventListener("click", async (e) => {
   const path = await promise2;
   path.forEach((p) => path_mark(p.x, p.y));
   const clear = await promise3;
-});
+}
+
 document.getElementById("Clear").addEventListener("click", (e) => {
   ClearBlocks();
 });
