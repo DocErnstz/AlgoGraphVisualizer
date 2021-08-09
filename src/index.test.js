@@ -1,41 +1,36 @@
 import { fireEvent, getByText, waitFor } from "@testing-library/dom";
 import "@testing-library/jest-dom/extend-expect";
-import { JSDOM } from "jsdom";
 import fs from "fs";
 import path from "path";
-import { block_setter } from "./App/utils";
 
 const html = fs.readFileSync(path.resolve(__dirname, "./index.html"), "utf8");
 
-let dom;
-let container;
-
-describe("index.html", () => {
+describe("index.js", () => {
   beforeEach(() => {
-    dom = new JSDOM(html, { runScripts: "dangerously" });
-    container = dom.window.document.body;
+    document.documentElement.innerHTML = html.toString();
   });
 
-  it("renders a heading element", () => {
-    expect(container.querySelector("h1")).not.toBeNull();
-    expect(getByText(container, "Pathfinding")).toBeInTheDocument();
+  it("block class is added to col when is clicked", () => {
+    const { block_setter, setlisteners, select } = require("./App/index.js");
+    setlisteners();
+    const col = document.getElementsByClassName("col")[3];
+    fireEvent.click(col);
+    expect(col).toHaveClass("block");
   });
-  it("all cols are set up", async () => {
-    const cols = container.getElementsByClassName("col");
-    const colsArr = Array.from(cols);
-    const colsArrF = colsArr.filter((x) => colsArr.indexOf(x) > 1);
-    expect(colsArrF.length).toBe(322);
-    expect(document.getElementsByClassName("col")).toBe([]);
+  it("select function paint cells", () => {
+    const { select } = require("./App/index.js");
+    const x = 3;
+    const y = 3;
+    const elements = document.getElementById("matrix").children;
+    select(x, y);
+    expect(elements.item(y).children.item(x).children).toMatchSnapshot();
   });
-  it("block works out", () => {
-    const scol = getByText(container, "a");
-    const block_point = block_setter(scol);
-    expect(scol).toHaveClass("block");
-    const blockobject = {
-      x: block_point.x,
-      y: block_point.y,
-      id: block_point.id,
-    };
-    expect(blockobject).toMatchSnapshot();
+  it("path mark works fine", () => {
+    const { path_mark } = require("./App/index.js");
+    const x = 3;
+    const y = 3;
+    const elements = document.getElementById("matrix").children;
+    path_mark(x, y);
+    expect(elements.item(y).children.item(x).children).toMatchSnapshot();
   });
 });

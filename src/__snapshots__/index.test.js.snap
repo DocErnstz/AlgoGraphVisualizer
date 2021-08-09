@@ -7,3 +7,19 @@ Object {
   "y": 0,
 }
 `;
+
+exports[`index.js path mark works fine 1`] = `
+HTMLCollection [
+  <div
+    class="blue"
+  />,
+]
+`;
+
+exports[`index.js select function paint cells 1`] = `
+HTMLCollection [
+  <div
+    class="red"
+  />,
+]
+`;

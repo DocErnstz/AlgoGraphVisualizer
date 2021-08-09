@@ -17,7 +17,7 @@ var start_point = new Cell(0, 0);
 var end_point = new Cell(2, 2);
 var selected_id = "start";
 export var blocks = {};
-export function path_mark(x, y) {
+function path_mark(x, y) {
   var elements = document.getElementById("matrix").children;
   const blue = document.createElement("div");
   blue.classList.add("blue");
@@ -25,9 +25,6 @@ export function path_mark(x, y) {
 }
 
 document.getElementById("Visualizer").addEventListener("click", async (e) => {
-  //console.log(pathfinding(start_point, end_point));
-  console.log("a");
-
   let promise = new Promise((resolve, reject) => {
     setTimeout(function () {
       resolve(UCS(start_point, end_point));
@@ -48,7 +45,6 @@ document.getElementById("Visualizer").addEventListener("click", async (e) => {
   const path = await promise2;
   path.forEach((p) => path_mark(p.x, p.y));
   const clear = await promise3;
-  //pathfinding(start_point, end_point, UCS_dict).forEach((pos) => path_mark(pos.charAt(0), pos.charAt(1)));
 });
 document.getElementById("Clear").addEventListener("click", (e) => {
   ClearBlocks();
@@ -57,13 +53,16 @@ document.getElementById("Clear").addEventListener("click", (e) => {
 start.addEventListener("dragstart", dragStart);
 end.addEventListener("dragstart", dragStart);
 
-for (const cell of cells) {
-  cell.addEventListener("dragover", dragOver);
-  cell.addEventListener("dragenter", dragenter);
-  cell.addEventListener("dragleave", dragleave);
-  cell.addEventListener("drop", dragDrop);
-  cell.addEventListener("click", block_setter);
+function setlisteners() {
+  for (const cell of cells) {
+    cell.addEventListener("dragover", dragOver);
+    cell.addEventListener("dragenter", dragenter);
+    cell.addEventListener("dragleave", dragleave);
+    cell.addEventListener("drop", dragDrop);
+    cell.addEventListener("click", block_setter);
+  }
 }
+setlisteners();
 
 function block_setter() {
   this.classList.add("block");
@@ -73,7 +72,6 @@ function block_setter() {
   );
   blocks[block_point.id] = null;
   cost_so_far[block_point.id] = null;
-  console.log(block_point.id);
 }
 
 async function dragStart() {
@@ -127,13 +125,8 @@ async function dragDrop() {
       Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode)
     );
   }
-
-  //start_point = new Cell(Array.from(this.parentNode.children).indexOf(this), Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode));
 }
 
-function sum() {
-  return 4;
-}
 function select(x, y) {
   var elements = document.getElementById("matrix").children;
   const red = document.createElement("div");
@@ -141,4 +134,8 @@ function select(x, y) {
   elements.item(y).children.item(x).append(red);
 }
 
-module.exports = { sum: sum };
+module.exports = {
+  setlisteners: setlisteners,
+  select: select,
+  path_mark: path_mark,
+};
