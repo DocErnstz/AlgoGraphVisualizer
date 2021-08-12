@@ -71,13 +71,15 @@ function setlisteners() {
 setlisteners();
 
 function block_setter() {
-  this.classList.add("block");
-  var block_point = new Cell(
-    Array.from(this.parentNode.children).indexOf(this),
-    Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode)
-  );
-  blocks[block_point.id] = null;
-  cost_so_far[block_point.id] = null;
+  if (!this.hasChildNodes()) {
+    this.classList.add("block");
+    var block_point = new Cell(
+      Array.from(this.parentNode.children).indexOf(this),
+      Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode)
+    );
+    blocks[block_point.id] = null;
+    cost_so_far[block_point.id] = null;
+  }
 }
 
 async function dragStart() {
