@@ -54,13 +54,14 @@ export function UCS(start, goal) {
   var came_from = {};
   came_from[start.id] = null;
   cost_so_far[start.id] = 0;
-
-  while (!frontier.isEmpty()) {
+  let id = null;
+  id = setInterval(frame, 5);
+  function frame() {
     var current = frontier.front();
 
     frontier.dequeue();
     if (current.element.id == goal.id) {
-      break;
+      clearInterval(id);
     }
     current.element.neighbors().forEach((next) => {
       var new_cost = 1 + cost_so_far[current.element.id];
