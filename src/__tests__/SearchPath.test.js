@@ -2,6 +2,7 @@ import { fireEvent, getByText, waitFor } from "@testing-library/dom";
 import "@testing-library/jest-dom/extend-expect";
 import fs from "fs";
 import path from "path";
+import { isRegExp } from "util";
 
 jest.dontMock("fs");
 
@@ -26,7 +27,7 @@ describe("SearchPath.js", () => {
     Clear();
     expect(element.children[0]).not.toBeTruthy();
   });
-  it("ClearBlocks functions remove block class from cells", async () => {
+  it("ClearBlocks function remove block class from cells", async () => {
     const { ClearBlocks } = require("../App/SearchPath.js");
     const { setlisteners } = require("../App/index.js");
     const x = 3;

@@ -25,18 +25,28 @@ describe("index.js", () => {
   });
   it("select function paint cells", () => {
     const { select } = require("./App/index.js");
-    const x = 3;
-    const y = 3;
+    const p = 3;
     const elements = document.getElementById("matrix").children;
-    select(x, y);
-    expect(elements.item(y).children.item(x).children).toMatchSnapshot();
+    select(p, p);
+    expect(elements.item(p).children.item(p).children).toMatchSnapshot();
   });
   it("path mark works fine", () => {
     const { path_mark } = require("./App/index.js");
-    const x = 3;
-    const y = 3;
+    const p = 3;
     const elements = document.getElementById("matrix").children;
-    path_mark(x, y);
-    expect(elements.item(y).children.item(x).children).toMatchSnapshot();
+    path_mark(p, p);
+    expect(elements.item(p).children.item(p).children).toMatchSnapshot();
+  });
+  it("blocks cannot be set in cells who hold a point", () => {
+    const { block_setter, setlisteners } = require("./App/index.js");
+
+    const elements = document.getElementById("matrix").children;
+    const i = [0, 1];
+    const startcell = elements.item(i[0]).children.item(i[1]);
+    const endcell = elements.item(i[0]).children.item(i[1]);
+    fireEvent.click(startcell);
+    fireEvent.click(endcell);
+    expect(startcell).not.toHaveClass("block");
+    expect(endcell).not.toHaveClass("block");
   });
 });

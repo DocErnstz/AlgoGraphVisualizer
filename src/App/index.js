@@ -1,3 +1,4 @@
+require("./css/index.css");
 import "regenerator-runtime/runtime";
 
 import {
@@ -90,7 +91,7 @@ async function dragStart() {
       resolve("production has finished");
     }, 300);
   });
-  await promise2.then((b) => (selected_id = this.id));
+  await promise2.then(() => (selected_id = this.id));
 }
 
 function dragOver(e) {
@@ -143,4 +144,6 @@ module.exports = {
   setlisteners: setlisteners,
   select: select,
   path_mark: path_mark,
+  selected_id: selected_id,
+  dragStart: dragStart,
 };
