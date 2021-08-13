@@ -37,7 +37,7 @@ function UCS(start, goal) {
   goal.neighbors().forEach((element) => {
     neigh_ids.push(element.id);
   });
-  console.log(neigh_ids);
+
   id = setInterval(function () {
     var current = frontier.front();
 
@@ -45,9 +45,18 @@ function UCS(start, goal) {
     if (current.element.id == goal.id) {
       clearInterval(id);
       Clear();
-      pathfinding(start_point, end_point, came_from).forEach((p) =>
-        path_mark(p.x, p.y)
-      );
+      var i = 0;
+      let idz = null;
+      var pathf = pathfinding(start_point, end_point, came_from);
+      idz = setInterval(() => {
+        if (i == pathf.length) {
+          clearInterval(idz);
+        }
+
+        path_mark(pathf[i].x, pathf[i].y);
+
+        i += 1;
+      }, 10);
     }
     current.element.neighbors().forEach((next) => {
       var new_cost = 1 + cost_so_far[current.element.id];
@@ -68,11 +77,7 @@ function UCS(start, goal) {
 
 function pathfinding(start, goal, dict) {
   var path = [];
-  try {
-    var current = dict[goal.id];
-  } catch (error) {
-    console.log(goal);
-  }
+  var current = dict[goal.id];
   while (current.id != start.id) {
     path.push(current);
     current = dict[current.id];
