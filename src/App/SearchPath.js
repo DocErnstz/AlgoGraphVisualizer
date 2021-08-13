@@ -1,7 +1,7 @@
 const { Cell, PriorityQueue } = require("./DataStructure.js");
 
 var size_x = 71;
-var size_y = 32;
+var size_y = 31;
 export var cost_so_far = {};
 
 export function select(x, y) {

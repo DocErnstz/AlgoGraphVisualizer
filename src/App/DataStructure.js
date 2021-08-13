@@ -1,3 +1,5 @@
+var size_x = 71;
+var size_y = 31;
 class QElement {
   constructor(element, priority) {
     this.element = element;
@@ -55,9 +57,9 @@ class Cell {
     var maxX = 2;
     var maxY = 2;
     if (this.x - 1 < 0) minX = 0;
-    if (this.x + 1 > 70) maxX = 1;
+    if (this.x + 1 > size_x - 1) maxX = 1;
     if (this.y - 1 < 0) minY = 0;
-    if (this.y + 1 > 31) maxY = 1;
+    if (this.y + 1 > size_y - 1) maxY = 1;
     for (var x = minX; x < maxX; x++) {
       for (var y = minY; y < maxY; y++) {
         if (
@@ -71,7 +73,6 @@ class Cell {
         set.push(new Cell(x + this.x, y + this.y));
       }
     }
-
     return set;
   }
 }

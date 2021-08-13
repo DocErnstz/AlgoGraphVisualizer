@@ -6,7 +6,7 @@ import { Clear, ClearBlocks, cost_so_far } from "./SearchPath.js";
 const { Cell, PriorityQueue } = require("./DataStructure.js");
 
 var start_point = new Cell(0, 0);
-var end_point = new Cell(1, 0);
+var end_point = new Cell(2, 0);
 const start = document.getElementById("start");
 const end = document.getElementById("end");
 const cells = document.querySelectorAll(".col");
@@ -24,6 +24,32 @@ export function path_mark(x, y) {
 document.getElementById("Visualizer").addEventListener("click", async () => {
   listenVisual();
 });
+document.getElementById("GenMaze").addEventListener("click", () => {
+  function setter(vari, varj) {
+    elements.item(varj).children.item(vari).classList.add("block");
+    var block_point = new Cell(
+      Array.from(
+        elements.item(varj).children.item(vari).parentNode.children
+      ).indexOf(elements.item(varj).children.item(vari)),
+      Array.from(
+        elements.item(varj).children.item(vari).parentNode.parentNode.children
+      ).indexOf(elements.item(varj).children.item(vari).parentNode)
+    );
+    blocks[block_point.id] = null;
+    cost_so_far[block_point.id] = null;
+  }
+  var elements = document.getElementById("matrix").children;
+  for (var j = 1; j < elements.length; j += 2) {
+    for (var i = 0; i < elements.item(0).children.length; i += 1) {
+      setter(i, j);
+    }
+  }
+  for (var j = 0; j < elements.length; j += 1) {
+    for (var i = 1; i < elements.item(0).children.length; i += 2) {
+      setter(i, j);
+    }
+  }
+});
 
 function UCS(start, goal) {
   var frontier = new PriorityQueue();
@@ -34,6 +60,7 @@ function UCS(start, goal) {
   let id = null;
   var neigh_ids = [];
   neigh_ids.push(goal.id);
+  console.log(goal.neighbors());
   goal.neighbors().forEach((element) => {
     neigh_ids.push(element.id);
   });
