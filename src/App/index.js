@@ -1,24 +1,20 @@
 require("./css/index.css");
 import "regenerator-runtime/runtime";
 
-import {
-  pathfinding,
-  Clear,
-  ClearBlocks,
-  UCS,
-  cost_so_far,
-} from "./SearchPath.js";
-const { PriorityQueue } = require("./DataStructure.js");
-const { Cell } = require("./DataStructure.js");
+import { Clear, ClearBlocks, cost_so_far } from "./SearchPath.js";
 
+const { Cell, PriorityQueue } = require("./DataStructure.js");
+
+var start_point = new Cell(0, 0);
+var end_point = new Cell(1, 0);
 const start = document.getElementById("start");
 const end = document.getElementById("end");
 const cells = document.querySelectorAll(".col");
-var start_point = new Cell(0, 0);
-var end_point = new Cell(2, 2);
+
 var selected_id = "start";
+
 export var blocks = {};
-function path_mark(x, y) {
+export function path_mark(x, y) {
   var elements = document.getElementById("matrix").children;
   const blue = document.createElement("div");
   blue.classList.add("blue");
@@ -29,6 +25,61 @@ document.getElementById("Visualizer").addEventListener("click", async () => {
   listenVisual();
 });
 
+function UCS(start, goal) {
+  var frontier = new PriorityQueue();
+  frontier.enqueue(start, 0);
+  var came_from = {};
+  came_from[start.id] = null;
+  cost_so_far[start.id] = 0;
+  let id = null;
+  var neigh_ids = [];
+  neigh_ids.push(goal.id);
+  goal.neighbors().forEach((element) => {
+    neigh_ids.push(element.id);
+  });
+  console.log(neigh_ids);
+  id = setInterval(function () {
+    var current = frontier.front();
+
+    frontier.dequeue();
+    if (current.element.id == goal.id) {
+      clearInterval(id);
+      Clear();
+      pathfinding(start_point, end_point, came_from).forEach((p) =>
+        path_mark(p.x, p.y)
+      );
+    }
+    current.element.neighbors().forEach((next) => {
+      var new_cost = 1 + cost_so_far[current.element.id];
+      if (!(next.id in cost_so_far) || new_cost < cost_so_far[next.id]) {
+        cost_so_far[next.id] = new_cost;
+        frontier.enqueue(next, new_cost);
+        came_from[next.id] = current.element;
+
+        if (!neigh_ids.includes(next.id)) {
+          select(next.x, next.y);
+        }
+      }
+    });
+  }, 1);
+
+  return came_from;
+}
+
+function pathfinding(start, goal, dict) {
+  var path = [];
+  try {
+    var current = dict[goal.id];
+  } catch (error) {
+    console.log(goal);
+  }
+  while (current.id != start.id) {
+    path.push(current);
+    current = dict[current.id];
+  }
+  return path;
+}
+
 async function listenVisual() {
   let promise = new Promise((resolve, reject) => {
     setTimeout(function () {
@@ -37,19 +88,6 @@ async function listenVisual() {
   });
 
   var UCS_dict = await promise;
-  let promise2 = new Promise((resolve, reject) => {
-    setTimeout(function () {
-      resolve(pathfinding(start_point, end_point, UCS_dict));
-    }, 1500);
-  });
-  let promise3 = new Promise((resolve, reject) => {
-    setTimeout(function () {
-      resolve(Clear());
-    }, 2000);
-  });
-  const path = await promise2;
-  path.forEach((p) => path_mark(p.x, p.y));
-  const clear = await promise3;
 }
 
 document.getElementById("Clear").addEventListener("click", (e) => {
@@ -125,7 +163,6 @@ async function dragDrop() {
       Array.from(this.parentNode.children).indexOf(this),
       Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode)
     );
-    console.log(end_point);
   } else {
     await promise2.then(() => this.append(start));
     start_point = new Cell(
@@ -146,6 +183,5 @@ module.exports = {
   setlisteners: setlisteners,
   select: select,
   path_mark: path_mark,
-  selected_id: selected_id,
   dragStart: dragStart,
 };

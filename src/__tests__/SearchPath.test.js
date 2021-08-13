@@ -39,7 +39,4 @@ describe("SearchPath.js", () => {
     ClearBlocks();
     expect(element).not.toHaveClass("block");
   });
-  it("UCS is being animated", () => {
-    const { UCS } = require("../App/SearchPath.js");
-  });
 });

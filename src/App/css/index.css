@@ -4,7 +4,7 @@
 @import "navbar.css";
 
 :root {
-  --size_square: 30px;
+  --size_square: 15px;
   display: flex;
   justify-content: center;
   font-family: "Roboto", sans-serif;
