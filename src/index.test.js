@@ -83,7 +83,11 @@ describe("index.js", () => {
   });
   //TDD
   it("skipNeighbors doesnt go beyond the matrix limits", () => {
-    
-
+    const { Cell } = require("./App/DataStructure.js");
+    var a = new Cell(0,30);
+    var expected = [new Cell(2,30), new Cell(0, 28)];
+    expect(a.skipNeigh()).toEqual(expect.arrayContaining(expected));
+    var notexpected = [new Cell(0, 32)];
+    expect(a.skipNeigh()).not.toEqual(expect.arrayContaining(notexpected));
   })
 });
