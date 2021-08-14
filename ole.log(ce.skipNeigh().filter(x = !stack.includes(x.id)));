@@ -1,0 +1,83 @@
+[33mcommit 13b2cc761284602e3ced9493c5b4d3834e53b298[m[33m ([m[1;36mHEAD -> [m[1;32mtestin_DOM_approach[m[33m)[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Sat Aug 14 14:22:46 2021 -0300
+
+    skipNeighbors doesnt go beyond the matrix limits TDD end
+
+[33mcommit db85c9d239acad609a95210b38253d9ca52bc3c8[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Sat Aug 14 14:01:00 2021 -0300
+
+    TDD fail test set
+
+[33mcommit f9906b2ba8920e84b520504b1b46761ad4d29217[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Sat Aug 14 13:43:46 2021 -0300
+
+    skipNeighbors doesnt go beyond the matrix limits TDD
+
+[33mcommit 066d9d7a2a7819f30f18cf2ee8f756eba8d3ddb3[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Fri Aug 13 21:49:19 2021 -0300
+
+    eatWall delete the wall between two cells TDD
+
+[33mcommit a9b1f7cfe0d14a0dd78fc2eb5466babe2cd78f19[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Fri Aug 13 20:37:22 2021 -0300
+
+    initial state black walls
+
+[33mcommit 4182bac0d4ca592739c5ad5db134c2abdcd43d29[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Fri Aug 13 17:51:41 2021 -0300
+
+    mark the path animation
+
+[33mcommit a54fb425a8d17c972bd72e93e715b5e2b1ad3c38[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Fri Aug 13 16:57:29 2021 -0300
+
+    UCS anim fixed
+
+[33mcommit 6cca274096eda738777608e5495c1fc045897232[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Thu Aug 12 15:38:49 2021 -0300
+
+    TDD UCS is being animated
+
+[33mcommit 13e7de9f952b5fd313f32dce4b59c74a102955a7[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Thu Aug 12 14:57:38 2021 -0300
+
+    blocks cannot be set in cells who hold a point TDD passed
+
+[33mcommit 871cef4e4e2335ba021f58c395d4aa0aa8c53b4f[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Thu Aug 12 14:49:48 2021 -0300
+
+    TDD blocks cannot be set in cells who hold a point
+
+[33mcommit 11ed4f0bbf87129963eff470085e4a9ccd7ebc79[m[33m ([m[1;31morigin/testin_DOM_approach[m[33m)[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Mon Aug 9 15:43:36 2021 -0300
+
+    ClearBlocks functions remove block class from cells feature tested
+
+[33mcommit d01acca56915b56ff4538d712c373f5448a25b75[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Mon Aug 9 14:45:10 2021 -0300
+
+    clear functions delete all red cells test created
+
+[33mcommit 2390990f9054ce45d88ae9d55bcc30f72c1a11db[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Mon Aug 9 14:17:49 2021 -0300
+
+    function listenerVisual has been created
+
+[33mcommit 3d42f4aec51f489eab1aecb476ecdb5d31e69fbb[m
+Author: DocErnstz <ernesto800@outlook.com>
+Date:   Mon Aug 9 13:56:48 2021 -0300
+
+    init tests

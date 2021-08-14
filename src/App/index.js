@@ -29,6 +29,8 @@ document.getElementById("GenMaze").addEventListener("click", () => {
   setWalls();
   MazeEater();
 });
+
+
 function MazeEater() {
   var stack = []
   var elements = document.getElementById("matrix").children;
@@ -36,14 +38,24 @@ function MazeEater() {
   stack.push(start.id);
   let current = start;
   var i = 0;
-  while(i < 100){
-    
+  let id = null;
+  id = setInterval(function(){
+    if(i > 100){
+      clearInterval(id);
+    }
+   
     if(current.skipNeigh().filter(x => !stack.includes(x.id)).length == 0){
-      let ce =  new Cell(parseInt(stack[stack.length - 2].split(" ")[0]), parseInt(stack[stack.length - 2].split(" ")[1]))
-      var Substract = 2;
+
+      stack.pop()
+    
+      let ce =  new Cell(parseInt(stack[stack.length - 1].split(" ")[0]), parseInt(stack[stack.length - 1].split(" ")[1]))
+      let a = 0;
+      
       while(ce.skipNeigh().filter(x => !stack.includes(x.id)).length == 0){
-        Substract += 1;
-        ce = new Cell(parseInt(stack[stack.length - Substract].split(" ")[0]), parseInt(stack[stack.length - Substract].split(" ")[1]))
+        a = a + 1;
+        console.log(a);
+        stack.pop();
+        ce = new Cell(parseInt(stack[stack.length - 1].split(" ")[0]), parseInt(stack[stack.length - 1].split(" ")[1]))
       }
       current = ce;
       
@@ -58,8 +70,6 @@ function MazeEater() {
     catch(error){
       console.log(filterNeigh);
     }
-    console.log(next);
-    console.log(next.skipNeigh());
     eatWall(current, next);
     try{
       stack.push(next.id);
@@ -69,7 +79,7 @@ function MazeEater() {
     
     current = next;
     i++;
-  }
+  }, 5);
 
 
 }
