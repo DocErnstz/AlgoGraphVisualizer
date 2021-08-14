@@ -48,7 +48,7 @@ class Cell {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.id = x.toString() + y.toString();
+    this.id = x.toString() + " " + y.toString();
   }
   neighbors() {
     var set = [];
@@ -68,6 +68,31 @@ class Cell {
           (x == -1 && y == -1) ||
           (x == -1 && y == 1) ||
           (x == 1 && y == -1)
+        )
+          continue;
+        set.push(new Cell(x + this.x, y + this.y));
+      }
+    }
+    return set;
+  }
+  skipNeigh() {
+    var set = [];
+    var minX = -2;
+    var minY = -2;
+    var maxX = 2;
+    var maxY = 2;
+    if (this.x - 1 < 0) minX = 0;
+    if (this.x + 1 > size_x - 1) maxX = 1;
+    if (this.y - 1 < 0) minY = 0;
+    if (this.y + 1 > size_y - 1) maxY = 1;
+    for (var x = minX; x < maxX + 2; x += 2) {
+      for (var y = minY; y < maxY + 2; y += 2) {
+        if (
+          (x == 0 && y == 0) ||
+          (x == 2 && y == 2) ||
+          (x == -2 && y == -2) ||
+          (x == -2 && y == 2) ||
+          (x == 2 && y == -2)
         )
           continue;
         set.push(new Cell(x + this.x, y + this.y));

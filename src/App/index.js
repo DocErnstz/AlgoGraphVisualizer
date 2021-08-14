@@ -27,11 +27,68 @@ document.getElementById("Visualizer").addEventListener("click", async () => {
 
 document.getElementById("GenMaze").addEventListener("click", () => {
   setWalls();
+  MazeEater();
 });
+function MazeEater() {
+  var stack = []
+  var elements = document.getElementById("matrix").children;
+  var start = new Cell(0,0);
+  stack.push(start.id);
+  let current = start;
+  var i = 0;
+  while(i < 100){
+    
+    if(current.skipNeigh().filter(x => !stack.includes(x.id)).length == 0){
+      let ce =  new Cell(parseInt(stack[stack.length - 2].split(" ")[0]), parseInt(stack[stack.length - 2].split(" ")[1]))
+      var Substract = 2;
+      while(ce.skipNeigh().filter(x => !stack.includes(x.id)).length == 0){
+        Substract += 1;
+        ce = new Cell(parseInt(stack[stack.length - Substract].split(" ")[0]), parseInt(stack[stack.length - Substract].split(" ")[1]))
+      }
+      current = ce;
+      
+    }
+    
+    var filterNeigh = current.skipNeigh().filter(x => !stack.includes(x.id));
+    
+    var ran = Math.floor(Math.random() * filterNeigh.length);
+    try{
+       var next = filterNeigh[ran];
+    }
+    catch(error){
+      console.log(filterNeigh);
+    }
+    console.log(next);
+    console.log(next.skipNeigh());
+    eatWall(current, next);
+    try{
+      stack.push(next.id);
+    } catch(error) {
+     console.log(filterNeigh);
+    }
+    
+    current = next;
+    i++;
+  }
+
+
+}
+
+
+
+
 
 function eatWall(a, b) {
   function remover(vari, varj) {
-    elements.item(varj).children.item(vari).classList.remove("block");
+    try{
+      elements.item(varj).children.item(vari).classList.remove("block");
+    } catch(error) {
+      var set = [];
+      set.push(vari);
+      set.push(varj);
+      
+    }
+    
     var block_point = new Cell(
       Array.from(
         elements.item(varj).children.item(vari).parentNode.children
@@ -44,13 +101,22 @@ function eatWall(a, b) {
     delete cost_so_far[block_point.id];
   }
   var elements = document.getElementById("matrix").children;
-  var difx = a.x - b.x;
-  var dify = a.y - b.y;
+  try{
+    var difx = b.x - a.x;
+  var dify = b.y - a.y;
+  } catch(error) {
+    
+  }
+  
   if (difx != 0) {
-    return new Cell(a.x + difx / 2, a.y);
+    var x = a.x + difx / 2;
+    var y = a.y;
+    remover(x, y);
   }
   if (dify != 0) {
-    return new Cell(a.x, dify / 2 + a.y);
+    var x = a.x;
+    var y = dify / 2 + a.y;
+    remover(x, y);
   }
 }
 
@@ -80,6 +146,9 @@ function setWalls() {
     }
   }
 }
+
+
+
 
 function UCS(start, goal) {
   var frontier = new PriorityQueue();
@@ -247,4 +316,5 @@ module.exports = {
   path_mark: path_mark,
   dragStart: dragStart,
   setWalls: setWalls,
+  eatWall: eatWall,
 };

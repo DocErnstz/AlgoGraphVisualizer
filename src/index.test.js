@@ -2,14 +2,17 @@ import { fireEvent, getByText, waitFor } from "@testing-library/dom";
 import "@testing-library/jest-dom/extend-expect";
 import fs from "fs";
 import path from "path";
+import { Cell } from "./App/DataStructure.js";
 
 jest.dontMock("fs");
 
 const html = fs.readFileSync(path.resolve(__dirname, "./index.html"), "utf8");
+let elements;
 
 describe("index.js", () => {
   beforeEach(() => {
     document.documentElement.innerHTML = html.toString();
+    elements = document.getElementById("matrix").children;
   });
   afterEach(() => {
     // restore the original func after test
@@ -26,21 +29,20 @@ describe("index.js", () => {
   it("select function paint cells", () => {
     const { select } = require("./App/index.js");
     const p = 3;
-    const elements = document.getElementById("matrix").children;
+
     select(p, p);
     expect(elements.item(p).children.item(p).children).toMatchSnapshot();
   });
   it("path mark works fine", () => {
     const { path_mark } = require("./App/index.js");
     const p = 3;
-    const elements = document.getElementById("matrix").children;
+
     path_mark(p, p);
     expect(elements.item(p).children.item(p).children).toMatchSnapshot();
   });
   it("blocks cannot be set in cells who hold a point", () => {
     const { block_setter, setlisteners } = require("./App/index.js");
 
-    const elements = document.getElementById("matrix").children;
     const startcell = elements.item(0).children.item(0);
     const endcell = elements.item(0).children.item(2);
     fireEvent.click(startcell);
@@ -50,7 +52,7 @@ describe("index.js", () => {
   });
   it("walls are fully generated", () => {
     const { setWalls } = require("./App/index.js");
-    const elements = document.getElementById("matrix").children;
+
     setWalls();
     for (var j = 0; j < elements.length; j += 1) {
       for (var i = 0; i < elements.item(0).children.length; i += 1) {
@@ -66,5 +68,22 @@ describe("index.js", () => {
       }
     }
   });
-  it("eatWall delete the wall between two cells", () => {});
+  //TDD
+  it("eatWall delete the wall between two cells", () => {
+    const { eatWall, setWalls } = require("./App/index.js");
+    setWalls();
+    eatWall(new Cell(2, 2), new Cell(2, 4));
+    expect(elements.item(3).children.item(2)).not.toHaveClass("block");
+    eatWall(new Cell(2, 2), new Cell(4, 2));
+    expect(elements.item(2).children.item(3)).not.toHaveClass("block");
+    eatWall(new Cell(2, 2), new Cell(2, 0));
+    expect(elements.item(1).children.item(2)).not.toHaveClass("block");
+    eatWall(new Cell(2, 2), new Cell(0, 2));
+    expect(elements.item(2).children.item(1)).not.toHaveClass("block");
+  });
+  //TDD
+  it("skipNeighbors doesnt go beyond the matrix limits", () => {
+    
+
+  })
 });
