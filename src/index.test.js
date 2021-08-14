@@ -89,5 +89,10 @@ describe("index.js", () => {
     expect(a.skipNeigh()).toEqual(expect.arrayContaining(expected));
     var notexpected = [new Cell(0, 32)];
     expect(a.skipNeigh()).not.toEqual(expect.arrayContaining(notexpected));
+    var notexpected2 = [new Cell(-2, 30)]
+    expect(a.skipNeigh()).not.toEqual(expect.arrayContaining(notexpected2));
+    var b = new Cell(70,0);
+    var notexpectedb = [new Cell(72,0)];
+    expect(b.skipNeigh()).not.toEqual(expect.arrayContaining(notexpectedb));
   })
 });

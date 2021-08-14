@@ -82,9 +82,9 @@ class Cell {
     var maxX = 2;
     var maxY = 2;
     if (this.x - 1 < 0) minX = 0;
-    if (this.x + 1 > size_x - 1) maxX = 1;
+    if (this.x + 1 > size_x - 1) maxX = 0;
     if (this.y - 1 < 0) minY = 0;
-    if (this.y + 1 > size_y - 1) maxY = 1;
+    if (this.y + 1 > size_y - 1) maxY = 0;
     for (var x = minX; x < maxX + 2; x += 2) {
       for (var y = minY; y < maxY + 2; y += 2) {
         if (
