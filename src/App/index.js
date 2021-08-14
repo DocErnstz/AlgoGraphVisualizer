@@ -24,7 +24,37 @@ export function path_mark(x, y) {
 document.getElementById("Visualizer").addEventListener("click", async () => {
   listenVisual();
 });
+
 document.getElementById("GenMaze").addEventListener("click", () => {
+  setWalls();
+});
+
+function eatWall(a, b) {
+  function remover(vari, varj) {
+    elements.item(varj).children.item(vari).classList.remove("block");
+    var block_point = new Cell(
+      Array.from(
+        elements.item(varj).children.item(vari).parentNode.children
+      ).indexOf(elements.item(varj).children.item(vari)),
+      Array.from(
+        elements.item(varj).children.item(vari).parentNode.parentNode.children
+      ).indexOf(elements.item(varj).children.item(vari).parentNode)
+    );
+    delete blocks[block_point.id];
+    delete cost_so_far[block_point.id];
+  }
+  var elements = document.getElementById("matrix").children;
+  var difx = a.x - b.x;
+  var dify = a.y - b.y;
+  if (difx != 0) {
+    return new Cell(a.x + difx / 2, a.y);
+  }
+  if (dify != 0) {
+    return new Cell(a.x, dify / 2 + a.y);
+  }
+}
+
+function setWalls() {
   function setter(vari, varj) {
     elements.item(varj).children.item(vari).classList.add("block");
     var block_point = new Cell(
@@ -49,7 +79,7 @@ document.getElementById("GenMaze").addEventListener("click", () => {
       setter(i, j);
     }
   }
-});
+}
 
 function UCS(start, goal) {
   var frontier = new PriorityQueue();
@@ -216,4 +246,5 @@ module.exports = {
   select: select,
   path_mark: path_mark,
   dragStart: dragStart,
+  setWalls: setWalls,
 };
