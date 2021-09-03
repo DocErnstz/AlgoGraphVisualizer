@@ -1,7 +1,7 @@
 require("./css/index.css");
 import "regenerator-runtime/runtime";
 
-import { Clear, ClearBlocks, cost_so_far } from "./SearchPath.js";
+import { Clear, ClearBlocks, ClearPath, cost_so_far } from "./SearchPath.js";
 
 const { Cell, PriorityQueue } = require("./DataStructure.js");
 
@@ -10,7 +10,7 @@ var end_point = new Cell(2, 0);
 const start = document.getElementById("start");
 const end = document.getElementById("end");
 const cells = document.querySelectorAll(".col");
-
+let visualizing = false;
 var selected_id = "start";
 
 export var blocks = {};
@@ -22,83 +22,81 @@ export function path_mark(x, y) {
 }
 
 document.getElementById("Visualizer").addEventListener("click", async () => {
-  listenVisual();
+  if(!visualizing){
+    listenVisual();
+    visualizing = false;
+  }
+  
+
 });
 
 document.getElementById("GenMaze").addEventListener("click", () => {
+  var elements = document.getElementById("matrix").children;
+  elements.item(0).children.item(2).append(start);
+  elements.item(0).children.item(0).append(end);
   setWalls();
   MazeEater();
 });
 
-
 function MazeEater() {
-  var stack = []
+  var stack = [];
   var elements = document.getElementById("matrix").children;
-  var start = new Cell(0,0);
+  var start = new Cell(0, 0);
   stack.push(start.id);
   let current = start;
   var i = 0;
   let id = null;
-  id = setInterval(function(){
-    if(i > 100){
+  id = setInterval(function () {
+    if (i > 500) {
       clearInterval(id);
     }
-   
-    if(current.skipNeigh().filter(x => !stack.includes(x.id)).length == 0){
 
-      stack.pop()
-    
-      let ce =  new Cell(parseInt(stack[stack.length - 1].split(" ")[0]), parseInt(stack[stack.length - 1].split(" ")[1]))
-      let a = 0;
-      
-      while(ce.skipNeigh().filter(x => !stack.includes(x.id)).length == 0){
-        a = a + 1;
-        console.log(a);
+    if (current.skipNeigh().filter((x) => !stack.includes(x.id)).length == 0) {
+      let ce = new Cell(
+        parseInt(stack[stack.length - 1].split(" ")[0]),
+        parseInt(stack[stack.length - 1].split(" ")[1])
+      );
+
+      while (ce.skipNeigh().filter((x) => !stack.includes(x.id)).length == 0) {
         stack.pop();
-        ce = new Cell(parseInt(stack[stack.length - 1].split(" ")[0]), parseInt(stack[stack.length - 1].split(" ")[1]))
+        ce = new Cell(
+          parseInt(stack[stack.length - 1].split(" ")[0]),
+          parseInt(stack[stack.length - 1].split(" ")[1])
+        );
       }
       current = ce;
-      
     }
-    
-    var filterNeigh = current.skipNeigh().filter(x => !stack.includes(x.id));
-    
+
+    var filterNeigh = current.skipNeigh().filter((x) => !stack.includes(x.id));
+
     var ran = Math.floor(Math.random() * filterNeigh.length);
-    try{
-       var next = filterNeigh[ran];
-    }
-    catch(error){
+    try {
+      var next = filterNeigh[ran];
+    } catch (error) {
       console.log(filterNeigh);
     }
     eatWall(current, next);
-    try{
+    try {
       stack.push(next.id);
-    } catch(error) {
-     console.log(filterNeigh);
+    } catch (error) {
+      console.log(filterNeigh);
     }
-    
+
     current = next;
     i++;
   }, 5);
-
-
 }
-
-
-
-
 
 function eatWall(a, b) {
   function remover(vari, varj) {
-    try{
+    try {
       elements.item(varj).children.item(vari).classList.remove("block");
-    } catch(error) {
+    } catch (error) {
       var set = [];
       set.push(vari);
       set.push(varj);
-      
     }
-    
+
     var block_point = new Cell(
       Array.from(
         elements.item(varj).children.item(vari).parentNode.children
@@ -111,13 +109,11 @@ function eatWall(a, b) {
     delete cost_so_far[block_point.id];
   }
   var elements = document.getElementById("matrix").children;
-  try{
+  try {
     var difx = b.x - a.x;
-  var dify = b.y - a.y;
-  } catch(error) {
-    
-  }
-  
+    var dify = b.y - a.y;
+  } catch (error) {}
+
   if (difx != 0) {
     var x = a.x + difx / 2;
     var y = a.y;
@@ -157,9 +153,6 @@ function setWalls() {
   }
 }
 
-
-
-
 function UCS(start, goal) {
   var frontier = new PriorityQueue();
   frontier.enqueue(start, 0);
@@ -187,6 +180,10 @@ function UCS(start, goal) {
       idz = setInterval(() => {
         if (i == pathf.length) {
           clearInterval(idz);
+          setTimeout(() => {
+     ClearPath();
+          visualizing = false;
+    }, 2000);
         }
 
         path_mark(pathf[i].x, pathf[i].y);
@@ -284,7 +281,7 @@ function dragenter(e) {
 }
 
 function dragleave() {
-  this.className = "col";
+  
 }
 
 async function dragDrop() {
@@ -298,7 +295,9 @@ async function dragDrop() {
       resolve();
     }, 300);
   });
-  if (selected_id == "end") {
+
+  if(!this.classList.contains("block")){
+     if (selected_id == "end") {
     await promise2.then(() => this.append(end));
     end_point = new Cell(
       Array.from(this.parentNode.children).indexOf(this),
@@ -311,6 +310,8 @@ async function dragDrop() {
       Array.from(this.parentNode.parentNode.children).indexOf(this.parentNode)
     );
   }
+  }
+ 
 }
 
 function select(x, y) {

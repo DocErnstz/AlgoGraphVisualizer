@@ -36,6 +36,26 @@ export function Clear() {
   }
 }
 
+export function ClearPath() {
+  var elements = document.getElementById("matrix").children;
+  cost_so_far = {};
+
+  for (var x = 0; x < size_x; x++) {
+    for (var y = 0; y < size_y; y++) {
+      if (elements.item(y).children.item(x).lastElementChild != null) {
+        if (
+          elements
+            .item(y)
+            .children.item(x)
+            .lastElementChild.classList.contains("blue")
+        ) {
+          elements.item(y).children.item(x).innerHTML = "";
+        }
+      }
+    }
+  }
+}
+
 export function ClearBlocks() {
   var elements = document.getElementById("matrix").children;
   cost_so_far = {};
