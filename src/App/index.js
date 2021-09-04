@@ -32,10 +32,12 @@ document.getElementById("Visualizer").addEventListener("click", async () => {
 
 document.getElementById("GenMaze").addEventListener("click", () => {
   var elements = document.getElementById("matrix").children;
-  elements.item(0).children.item(2).append(start);
+  if(!visualizing){
+     elements.item(0).children.item(2).append(start);
   elements.item(0).children.item(0).append(end);
   setWalls();
   MazeEater();
+  }
 });
 
 function MazeEater() {
