@@ -7,7 +7,7 @@ Web Application which can find the shortest path between two points by using the
 
 ## Author
 
-Katelin Frederick 2019
+Ernesto Mercado 2021
 
 ## Table of Contents
 * [About this Project](#about-this-project)
