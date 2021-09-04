@@ -16,7 +16,7 @@
   padding: 0px 10px;
 }
 
-.navbar a.disabled{
+.disabled{
     pointer-events: none;
 }
 .navbar a:active{

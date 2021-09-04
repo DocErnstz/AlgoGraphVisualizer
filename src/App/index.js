@@ -25,6 +25,8 @@ document.getElementById("Visualizer").addEventListener("click", async () => {
     listenVisual();
     visualizing = false;
     Array.from(document.getElementById("actions").children).forEach(button=> button.classList.add("disabled"));
+    start.classList.add("disabled");
+    end.classList.add("disabled");
 });
 
 
@@ -180,9 +182,10 @@ function UCS(start, goal) {
         if (i == pathf.length) {
           clearInterval(idz);
           setTimeout(() => {
-     ClearPath();
-     
-          Array.from(document.getElementById("actions").children).forEach(button=> button.classList.remove("disabled"));
+            ClearPath();
+            Array.from(document.getElementById("actions").children).forEach(button=> button.classList.remove("disabled"));
+            end.classList.remove("disabled");
+            document.getElementById("start").classList.remove("disabled");
     }, 2000);
         }
 
