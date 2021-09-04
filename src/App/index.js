@@ -22,22 +22,19 @@ export function path_mark(x, y) {
 }
 
 document.getElementById("Visualizer").addEventListener("click", async () => {
-  if(!visualizing){
     listenVisual();
     visualizing = false;
-  }
-  
-
+    Array.from(document.getElementById("actions").children).forEach(button=> button.classList.add("disabled"));
 });
+
 
 document.getElementById("GenMaze").addEventListener("click", () => {
   var elements = document.getElementById("matrix").children;
-  if(!visualizing){
-     elements.item(0).children.item(2).append(start);
+  elements.item(0).children.item(2).append(start);
   elements.item(0).children.item(0).append(end);
   setWalls();
   MazeEater();
-  }
+  
 });
 
 function MazeEater() {
@@ -184,7 +181,8 @@ function UCS(start, goal) {
           clearInterval(idz);
           setTimeout(() => {
      ClearPath();
-          visualizing = false;
+     
+          Array.from(document.getElementById("actions").children).forEach(button=> button.classList.remove("disabled"));
     }, 2000);
         }
 

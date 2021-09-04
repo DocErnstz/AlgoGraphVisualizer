@@ -16,9 +16,14 @@
   padding: 0px 10px;
 }
 
-.navbar a:hover {
-  background-color: #ff0000;
+.navbar a.disabled{
+    pointer-events: none;
 }
+.navbar a:active{
+  background-color: grey;
+}
+
+
 button {
   background-color: green;
   display: none;
